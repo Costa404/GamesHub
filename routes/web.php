@@ -6,18 +6,12 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\StudioController as AdminStudioController;
 use App\Http\Controllers\Admin\GameController as AdminGameController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 
-// ─── AUTENTICAÇÃO ─────────────────────────────────────────
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register']);
-});
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
+
 
 // ─── ROTAS PÚBLICAS ───────────────────────────────────────
 Route::get('/', [StudioController::class, 'index'])->name('studios.index');

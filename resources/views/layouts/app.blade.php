@@ -6,167 +6,408 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GamesHub — @yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-hover: #22222e;
+            --border: #2a2a3a;
+            --border-hover: #7f77dd;
+            --accent: #7f77dd;
+            --accent-hover: #6d65c5;
+            --accent-glow: rgba(127, 119, 221, 0.15);
+            --text-primary: #e8e8f0;
+            --text-secondary: #8888a8;
+            --text-muted: #555570;
+            --danger: #e24b4a;
+            --danger-bg: #2a1010;
+            --success: #1d9e75;
+            --success-bg: #0a2018;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background: #0f0f13;
-            color: #e2e2e8;
-            font-family: sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* ── NAVBAR ── */
         .navbar {
-            background: #18181f;
-            border-bottom: 1px solid #2a2a35;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         .navbar-brand {
-            color: #fff !important;
-            font-weight: 500;
+            color: var(--text-primary) !important;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
         }
 
-        .navbar-brand span {
-            background: #7f77dd;
-            padding: 2px 8px;
-            border-radius: 6px;
-            margin-right: 6px;
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .brand-dot {
+            color: var(--accent);
         }
 
         .nav-link {
-            color: #a0a0b0 !important;
+            color: var(--text-secondary) !important;
+            font-size: 14px;
+            padding: 6px 12px !important;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .nav-link:hover {
-            color: #fff !important;
+            color: var(--text-primary) !important;
+            background: var(--bg-hover);
         }
 
         .nav-link.active {
-            color: #afa9ec !important;
+            color: var(--accent) !important;
+            background: var(--accent-glow);
         }
 
+        /* ── BUTTONS ── */
         .btn-primary {
-            background: #7f77dd;
+            background: var(--accent);
             border: none;
+            color: #fff;
+            font-size: 13px;
+            border-radius: 8px;
+            padding: 7px 16px;
+            transition: all 0.2s;
         }
 
         .btn-primary:hover {
-            background: #6d65c5;
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px var(--accent-glow);
         }
 
         .btn-outline-secondary {
-            border-color: #2a2a35;
-            color: #a0a0b0;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            background: transparent;
+            font-size: 13px;
+            border-radius: 8px;
+            padding: 7px 16px;
+            transition: all 0.2s;
         }
 
         .btn-outline-secondary:hover {
-            border-color: #7f77dd;
-            color: #afa9ec;
-            background: transparent;
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
         }
 
+        .btn-danger-soft {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid rgba(226, 75, 74, 0.3);
+            font-size: 13px;
+            border-radius: 8px;
+            padding: 7px 16px;
+            transition: all 0.2s;
+        }
+
+        .btn-danger-soft:hover {
+            background: rgba(226, 75, 74, 0.2);
+            color: var(--danger);
+        }
+
+        .btn-admin {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid rgba(226, 75, 74, 0.3);
+            font-size: 13px;
+            border-radius: 8px;
+            padding: 7px 16px;
+        }
+
+        /* ── CARDS ── */
         .card {
-            background: #18181f;
-            border: 1px solid #2a2a35;
-            color: #e2e2e8;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 12px;
+            transition: all 0.2s;
         }
 
         .card:hover {
-            border-color: #7f77dd;
-            transition: border-color 0.2s;
+            border-color: var(--border-hover);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-2px);
         }
 
+        .card-img-top {
+            border-radius: 12px 12px 0 0;
+        }
+
+        /* ── FORMS ── */
+        .form-control,
+        .form-select {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .form-select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        /* ── TABLE ── */
+        .table {
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .table thead th {
+            color: var(--text-muted);
+            border-color: var(--border);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+        }
+
+        .table td {
+            border-color: var(--border);
+            padding: 12px 16px;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: var(--bg-hover);
+        }
+
+        /* ── BADGES ── */
+        .badge-games {
+            background: rgba(127, 119, 221, 0.15);
+            color: var(--accent);
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(127, 119, 221, 0.3);
+            font-weight: 500;
+        }
+
+        .badge-platform {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .badge-ps5 {
+            background: #003087;
+            color: #fff;
+        }
+
+        .badge-ps4 {
+            background: #003791;
+            color: #fff;
+        }
+
+        .badge-ps3 {
+            background: #1a3a6e;
+            color: #fff;
+        }
+
+        .badge-pegi {
+            background: var(--bg-hover);
+            color: var(--text-secondary);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        /* ── ALERTS ── */
+        .alert-danger {
+            background: var(--danger-bg);
+            border-color: rgba(226, 75, 74, 0.3);
+            color: #f09595;
+            border-radius: 8px;
+        }
+
+        .alert-success {
+            background: var(--success-bg);
+            border-color: rgba(29, 158, 117, 0.3);
+            color: #5dcaa5;
+            border-radius: 8px;
+        }
+
+        /* ── MISC ── */
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        .text-secondary-custom {
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .divider {
+            border-color: var(--border);
+            margin: 1.5rem 0;
+        }
+
+        /* ── FOOTER ── */
         footer {
-            background: #18181f;
-            border-top: 1px solid #2a2a35;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
             padding: 1.5rem 0;
             margin-top: auto;
         }
 
         footer a {
-            color: #7070a0;
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 13px;
+            transition: color 0.2s;
         }
 
         footer a:hover {
-            color: #afa9ec;
+            color: var(--accent);
         }
 
-        .badge-games {
-            background: #26215c;
-            color: #afa9ec;
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 20px;
+        .navbar-toggler {
+            border-color: var(--border);
         }
 
-        .text-muted {
-            color: #7070a0 !important;
+        .navbar-toggler-icon {
+            filter: invert(1);
         }
 
-        .form-control {
-            background: #18181f;
-            border: 1px solid #2a2a35;
-            color: #e2e2e8;
-        }
-
-        .form-control:focus {
-            background: #18181f;
-            border-color: #7f77dd;
-            color: #e2e2e8;
-            box-shadow: none;
-        }
-
-        .form-label {
-            color: #a0a0b0;
-            font-size: 13px;
-        }
-
-        .table {
-            color: #e2e2e8;
-        }
-
-        .table thead th {
-            color: #7070a0;
-            border-color: #2a2a35;
+        /* ── INVALID FEEDBACK ── */
+        .invalid-feedback {
             font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
-        .table td {
-            border-color: #2a2a35;
-        }
-
-        .alert-danger {
-            background: #3b1a1a;
-            border-color: #e24b4a;
-            color: #f09595;
-        }
-
-        .alert-success {
-            background: #0a2a1a;
-            border-color: #1d9e75;
-            color: #5dcaa5;
-        }
-
-        .dropdown-menu {
-            background: #18181f;
-            border: 1px solid #2a2a35;
-        }
-
-        .dropdown-item {
-            color: #a0a0b0;
-        }
-
-        .dropdown-item:hover {
-            background: #22222e;
-            color: #fff;
-        }
-
-        .dropdown-divider {
-            border-color: #2a2a35;
+        .is-invalid {
+            border-color: var(--danger) !important;
         }
     </style>
 </head>
@@ -177,46 +418,61 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="{{ route('studios.index') }}">
-                <span>G</span>GamesHub
+                <div class="brand-icon">
+                    <i class="bi bi-controller"></i>
+                </div>
+                Games<span class="brand-dot">Hub</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav me-auto ms-3">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('studios.*') ? 'active' : '' }}"
-                            href="{{ route('studios.index') }}">Estúdios</a>
+                            href="{{ route('studios.index') }}">
+                            <i class="bi bi-building"></i> Estúdios
+                        </a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto gap-2">
+                <ul class="navbar-nav ms-auto gap-2 align-items-center">
                     @guest
                         <li class="nav-item">
-                            <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-sm">Login</a>
+                            <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Registar</a>
+                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-person-plus"></i> Registar
+                            </a>
                         </li>
                     @endguest
 
                     @auth
                         <li class="nav-item d-flex align-items-center">
-                            <span class="text-muted me-2" style="font-size:13px;">Olá, <strong
-                                    style="color:#afa9ec;">{{ auth()->user()->name }}</strong></span>
+                            <span style="font-size:13px;color:var(--text-muted);">
+                                Olá, <strong style="color:var(--accent);">{{ auth()->user()->name }}</strong>
+                            </span>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm">Dashboard</a>
+                            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
                         </li>
-                        @if (auth()->user()->role === 'admin')
+                        @if (auth()->user()->is_admin)
                             <li class="nav-item">
-                                <a href="{{ route('admin.studios.index') }}" class="btn btn-sm"
-                                    style="background:#3b1a1a;color:#e24b4a;">Admin</a>
+                                <a href="{{ route('admin.studios.index') }}" class="btn btn-admin btn-sm">
+                                    <i class="bi bi-shield-lock"></i> Admin
+                                </a>
                             </li>
                         @endif
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </button>
                             </form>
                         </li>
                     @endauth
@@ -229,10 +485,14 @@
     <main class="flex-grow-1 py-4">
         <div class="container">
             @if (session('success'))
-                <div class="alert alert-success mb-3">{{ session('success') }}</div>
+                <div class="alert alert-success mb-3">
+                    <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+                </div>
             @endif
             @if (session('error'))
-                <div class="alert alert-danger mb-3">{{ session('error') }}</div>
+                <div class="alert alert-danger mb-3">
+                    <i class="bi bi-exclamation-circle me-2"></i>{{ session('error') }}
+                </div>
             @endif
 
             @yield('content')
@@ -241,15 +501,19 @@
 
     {{-- FOOTER --}}
     <footer>
-        <div class="container d-flex justify-content-between align-items-center">
-            <span style="color:#fff;font-size:14px;font-weight:500;">GamesHub</span>
-            <div class="d-flex gap-3">
-                <a href="{{ route('studios.index') }}">Estúdios</a>
-                @auth
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
-                @endauth
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <span style="color:var(--text-primary);font-size:15px;font-weight:600;">
+                    Games<span style="color:var(--accent);">Hub</span>
+                </span>
+                <div class="d-flex gap-3">
+                    <a href="{{ route('studios.index') }}"><i class="bi bi-building me-1"></i>Estúdios</a>
+                    @auth
+                        <a href="{{ route('dashboard') }}"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+                    @endauth
+                </div>
+                <span style="color:var(--text-muted);font-size:12px;">© 2025 GamesHub — Projeto académico</span>
             </div>
-            <span style="color:#3a3a55;font-size:12px;">© 2025 GamesHub — Projeto académico</span>
         </div>
     </footer>
 
