@@ -67,7 +67,7 @@
         @endforelse
     </div>
 
-    {{-- PAGINAÇÃO --}}
+
     <div class="mt-4 d-flex justify-content-center">
         {{ $studios->links() }}
     </div>

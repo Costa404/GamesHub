@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StudioController;
-use App\Http\Controllers\GameController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Admin\StudioController as AdminStudioController;
 use App\Http\Controllers\Admin\GameController as AdminGameController;
+use App\Http\Controllers\Admin\StudioController as AdminStudioController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\StudioController;
+use Illuminate\Support\Facades\Route;
 
 
 
@@ -24,12 +25,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/games/{id}/edit', [GameController::class, 'edit'])->name('games.edit');
     Route::put('/games/{id}', [GameController::class, 'update'])->name('games.update');
+      Route::post('/games/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 });
 
+
+Route::get('/games/{id}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+
 // ─── ROTAS ADMIN ──────────────────────────────────────────
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-
     Route::get('/studios', [AdminStudioController::class, 'index'])->name('studios.index');
     Route::get('/studios/create', [AdminStudioController::class, 'create'])->name('studios.create');
     Route::post('/studios', [AdminStudioController::class, 'store'])->name('studios.store');
@@ -39,6 +44,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/games/create', [AdminGameController::class, 'create'])->name('games.create');
     Route::post('/games', [AdminGameController::class, 'store'])->name('games.store');
+    Route::get('/games/{id}/edit', [AdminGameController::class, 'edit'])->name('games.edit');   // ← ADICIONA
+    Route::put('/games/{id}', [AdminGameController::class, 'update'])->name('games.update');    // ← ADICIONA
     Route::delete('/games/{id}', [AdminGameController::class, 'destroy'])->name('games.destroy');
-
 });
+
+
+
+
+

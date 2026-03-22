@@ -6,17 +6,32 @@
 
     <div class="page-header">
         <h1 class="page-title">
-            <i class="bi bi-pencil me-2"></i>Editar Jogo
+            <i class="bi bi-pencil me-2"></i>Editar Jogo — Admin
         </h1>
-        <a href="{{ route('studios.games', $game->studio_id) }}" class="btn btn-outline-secondary btn-sm">
+        <a href="{{ route('admin.studios.index') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left me-1"></i>Voltar
         </a>
     </div>
 
     <div class="card p-4">
-        <form method="POST" action="{{ route('games.update', $game->id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.games.update', $game->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
+            <div class="mb-3">
+                <label class="form-label">Estúdio *</label>
+                <select name="studio_id" class="form-control @error('studio_id') is-invalid @enderror">
+                    <option value="">Selecionar estúdio...</option>
+                    @foreach($studios as $studio)
+                        <option value="{{ $studio->id }}" {{ old('studio_id', $game->studio_id) == $studio->id ? 'selected' : '' }}>
+                            {{ $studio->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('studio_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
             <div class="mb-3">
                 <label class="form-label">Nome do Jogo *</label>
