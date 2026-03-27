@@ -46,7 +46,7 @@ Mini-CRM de gestão de jogos e estúdios PlayStation, desenvolvido em Laravel.
 **1. Clonar o repositório**
 
 ```bash
-git clone https://github.com/teu-user/gameshub.git
+git clone https://github.com/costa404/gameshub.git
 cd gameshub
 ```
 

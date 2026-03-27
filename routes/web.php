@@ -25,10 +25,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/games/{id}/edit', [GameController::class, 'edit'])->name('games.edit');
     Route::put('/games/{id}', [GameController::class, 'update'])->name('games.update');
-      Route::post('/games/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::post('/games/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-
 });
+
+
 
 
 Route::get('/games/{id}/reviews', [ReviewController::class, 'index'])->name('reviews.index');
@@ -44,12 +45,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/games/create', [AdminGameController::class, 'create'])->name('games.create');
     Route::post('/games', [AdminGameController::class, 'store'])->name('games.store');
-    Route::get('/games/{id}/edit', [AdminGameController::class, 'edit'])->name('games.edit');   // ← ADICIONA
-    Route::put('/games/{id}', [AdminGameController::class, 'update'])->name('games.update');    // ← ADICIONA
+    Route::get('/games/{id}/edit', [AdminGameController::class, 'edit'])->name('games.edit');
+    Route::put('/games/{id}', [AdminGameController::class, 'update'])->name('games.update');
     Route::delete('/games/{id}', [AdminGameController::class, 'destroy'])->name('games.destroy');
 });
 
 
-
-
-
+Route::fallback(function () {
+    return view('errors.404');
+});
